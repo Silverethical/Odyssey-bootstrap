@@ -9,7 +9,7 @@ if [ "$(uname)" = "Darwin" ]; then
 fi
 
 CURRENTDIR=$(pwd)
-ODYSSEYDIR=$(mktemp -d)
+ODYSSEYDIR=./resources
 
 cat << "EOF"
 Odysseyra1n Installation Script
@@ -96,13 +96,7 @@ rm ./bootstrap* ./*.deb odysseyra1n-install.bash
 echo "Done!"
 EOF
 
-echo "(1) Downloading resources..."
 IPROXY=$(iproxy 28605 44 >/dev/null 2>&1 & echo $!)
-curl -sLOOOOO https://github.com/coolstar/Odyssey-bootstrap/raw/master/bootstrap_1500.tar.gz \
-	https://github.com/coolstar/Odyssey-bootstrap/raw/master/bootstrap_1600.tar.gz \
-	https://github.com/coolstar/Odyssey-bootstrap/raw/master/bootstrap_1700.tar.gz \
-	https://github.com/coolstar/Odyssey-bootstrap/raw/master/org.coolstar.sileo_2.2.3_iphoneos-arm.deb \
-	https://github.com/coolstar/Odyssey-bootstrap/raw/master/org.swift.libswift_5.0-electra2_iphoneos-arm.deb
 if [ ! "${ARM}" = yes ]; then
 	echo "(2) Copying resources to your device..."
 	echo "Default password is: alpine"
@@ -121,5 +115,4 @@ else
 	ssh -qp28605 -o "StrictHostKeyChecking no" -o "UserKnownHostsFile=/dev/null" root@127.0.0.1 "bash /var/root/odysseyra1n-install.bash"
 	kill "$IPROXY"
 	cd "$CURRENTDIR"
-	rm -rf "$ODYSSEYDIR"
 fi
